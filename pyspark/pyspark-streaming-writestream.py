@@ -1,7 +1,8 @@
+import sys
+
 # need to import for session creation
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-import sys
 
 # creating the spark session
 spark = SparkSession.builder.master("local").appName("SparkStructuredWriteStream").getOrCreate()
@@ -14,18 +15,12 @@ data = [
 
 columns=["name","dob_year","gender","salary"]
 df=spark.createDataFrame(data,columns)
-df.printSchema()
 
 # show table
 df.show()
 
 # show schema
 df.printSchema()
-
-sys.exit()
-
-df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("subscribe", "topic_1").option("startingOffsets", "earliest").load().select(F.col("value").cast("string"))
-
 
 df.writeStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").start().awaitTermination()
 
