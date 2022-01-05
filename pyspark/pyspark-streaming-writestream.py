@@ -22,7 +22,7 @@ df.show()
 # show schema
 df.printSchema()
 
-df.write.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").start().awaitTermination()
+df.write.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").save().awaitTermination()
 
 import sys
 sys.exit()
