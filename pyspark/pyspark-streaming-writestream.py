@@ -1,21 +1,10 @@
-# Need to import to use date time
-from datetime import datetime, date
-
-# need to import for working with pandas
-#import pandas as pd
-
-# need to import to use pyspark
-from pyspark.sql import Row
-
 # need to import for session creation
 from pyspark.sql import SparkSession
-
 from pyspark.sql import functions as F
-# creating the session
-spark = SparkSession.builder.master("local").getOrCreate()
+import sys
 
 # creating the spark session
-spark = SparkSession.builder.master("local").appName("SparkStructuredReadStream").getOrCreate()
+spark = SparkSession.builder.master("local").appName("SparkStructuredWriteStream").getOrCreate()
 
 data = [
 		("James, A, Smith","2018","M",3000),
@@ -33,6 +22,7 @@ df.show()
 # show schema
 df.printSchema()
 
+sys.exit()
 
 df = spark.readStream.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("subscribe", "topic_1").option("startingOffsets", "earliest").load().select(F.col("value").cast("string"))
 

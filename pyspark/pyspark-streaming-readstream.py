@@ -4,6 +4,8 @@ This code can be run on hadoop system with kafka installed:
 https://github.com/surajn222/vagrant-boxes/tree/main/Hadoop-Ubuntu-Single-Node
 https://github.com/surajn222/vagrant-boxes/tree/main/Ubuntu-kafdrop
 
+spark-submit command:
+/home/hduser/spark-3.1.2-bin-hadoop2.7/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2 pyspark_console.py
 """
 
 
