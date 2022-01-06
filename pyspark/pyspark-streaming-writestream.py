@@ -22,11 +22,17 @@ df.show()
 # show schema
 df.printSchema()
 
-df2 = df.select("name", "gender").rdd.collectAsMap()
-df2.show()
+from pyspark.sql.functions import to_json, struct
+
+(df.select(to_json(struct([df[x] for x in df.columns])).alias("value")).write.outputMode("update").format("console").save()
 
 import sys
 sys.exit()
+
+
+df2 = df.select("name", "gender").rdd.collectAsMap()
+df2.show()
+
 
 
 df.write.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").save()
