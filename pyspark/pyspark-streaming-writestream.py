@@ -29,7 +29,7 @@ import sys
 sys.exit()
 
 
-df.write.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").save().awaitTermination()
+df.write.format("kafka").option("kafka.bootstrap.servers", "localhost:9092").option("checkpointLocation","hdfs:///tmp").option("topic", "topic_2").save()
 
 
 df.writeStream.outputMode("update").format("console").start().awaitTermination()
