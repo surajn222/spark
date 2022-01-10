@@ -33,11 +33,12 @@ df.show()
 # show schema
 df.printSchema()
 
+print("Writing to kafka")
 #df.select(to_json(struct([df[x] for x in df.columns])).alias("value")).write.outputMode("update").format("console").save()
 df.select(to_json(struct([df[x] for x in df.columns])).alias("value")).write.format("kafka").option("kafka.bootstrap.servers", bootstrap_servers).option("checkpointLocation","hdfs:///tmp").option("topic", topic).save()
+print("Writing to kafka completed")
 
 sys.exit()
-
 
 
 df2 = df.select("name", "gender").rdd.collectAsMap()
@@ -46,8 +47,6 @@ df2.show()
 df.writeStream.outputMode("update").format("console").start().awaitTermination()
 
 sys.exit()
-
-
 
 
 qry = df.writeStream.format("console").option("truncate","false").start()
